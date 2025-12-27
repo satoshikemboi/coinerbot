@@ -35,7 +35,7 @@ function Login() {
       console.log("Login success:", data);
 
       // Redirect after login
-      navigate("/dashboard");
+      navigate("/home");
 
     } catch (error) {
       console.error("Login error:", error);

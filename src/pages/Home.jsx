@@ -1,11 +1,13 @@
 
 import React from 'react';
+import Navbar from '../components/Navbar';
+import Markets from '../components/Markets';
 
 function Home() {
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the main landing page of the application.</p>
+      <Navbar />
+      <Markets />
     </div>
   );
 }
