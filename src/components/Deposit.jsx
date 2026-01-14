@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import DepositCrypto from "./DepositCrypto";
 import { FaPhoneAlt, FaWallet, FaCreditCard, FaExclamationCircle } from "react-icons/fa";
 
 const Deposit = () => {
   // State to track which tab is active: 'mobile', 'crypto', or 'card'
   const [activeTab, setActiveTab] = useState("mobile");
+  const [selectedAsset, setSelectedAsset] = useState(null);
+  const handleChange = (e) => {
+    setSelectedAsset(e.target.value);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 flex flex-col items-center">
@@ -33,7 +38,7 @@ const Deposit = () => {
             onClick={() => setActiveTab("crypto")}
             className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-bold transition-all ${
               activeTab === "crypto"
-                ? "bg-linear-to-r from-orange-500 to-yellow-500 text-white shadow-md"
+                ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
                 : "text-gray-500 hover:bg-gray-100"
             }`}
           >
@@ -44,7 +49,7 @@ const Deposit = () => {
             onClick={() => setActiveTab("card")}
             className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-bold transition-all ${
               activeTab === "card"
-                ? "bg-linear-to-r from-orange-500 to-yellow-500 text-white shadow-md"
+                ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
                 : "text-gray-500 hover:bg-gray-100"
             }`}
           >
@@ -91,8 +96,8 @@ const Deposit = () => {
           )}
 
           {activeTab === "crypto" && (
-            <div className="py-20 text-center text-gray-500 italic">
-              Crypto deposit interface goes here...
+            <div>
+              <DepositCrypto selectedAsset={selectedAsset} handleChange={handleChange} />
             </div>
           )}
 
