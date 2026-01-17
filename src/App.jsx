@@ -12,6 +12,7 @@ import Deposit from './components/Deposit';
 import Withdraw from './components/Withdraw';
 import DepositCrypto from './components/DepositCrypto';
 import Mpesa from './components/Mpesa';
+import Card from './components/Card';
 
 const MainLayout = () => {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/withdraw" element={<Withdraw />} />
         <Route path="/deposit/crypto" element={<DepositCrypto />} />
         <Route path="/mpesa" element={<Mpesa />} />
+        <Route path="/card" element={<Card />} />
       </Route>
     </Routes>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DepositCrypto from "./DepositCrypto";
 import { FaPhoneAlt, FaWallet, FaCreditCard, FaExclamationCircle } from "react-icons/fa";
 import Mpesa from "./Mpesa";
+import Card from "./Card";
 
 const Deposit = () => {
   // State to track which tab is active: 'mobile', 'crypto', or 'card'
@@ -122,7 +123,7 @@ const Deposit = () => {
 
           {activeTab === "card" && (
             <div className="py-20 text-center text-gray-500 italic">
-              Card payment interface goes here...
+              <Card />
             </div>
           )}
         </div>
