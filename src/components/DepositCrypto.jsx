@@ -52,7 +52,7 @@ const assets = [
 export default function CryptoPaymentFlow() {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [isGenerated, setIsGenerated] = useState(false);
-  const [amount, setAmount] = useState('180');
+  const [amount, setAmount] = useState('25');
   const [timeLeft, setLeft] = useState(900); // 15 minutes in seconds
 
   // Timer Logic
@@ -90,7 +90,7 @@ export default function CryptoPaymentFlow() {
 
   // --- VIEW 2: PAYMENT CREATED ---
   if (isGenerated) {
-    const cryptoAmount = (parseFloat(amount) * selectedAsset.rate).toFixed(8);
+    const cryptoAmount = (parseFloat(amount) * selectedAsset.rate).toFixed(2);
 
     return (
         <div className="flex flex-col gap-4 p-6 max-w-md mx-auto bg-[#f8faff] min-h-screen">

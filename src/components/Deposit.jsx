@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DepositCrypto from "./DepositCrypto";
 import { FaPhoneAlt, FaWallet, FaCreditCard, FaExclamationCircle } from "react-icons/fa";
+import Mpesa from "./Mpesa";
 
 const Deposit = () => {
   // State to track which tab is active: 'mobile', 'crypto', or 'card'
@@ -83,15 +84,33 @@ const Deposit = () => {
               </div>
 
               {/* Risk Disclaimer */}
-              <div className="mt-10 w-full p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 text-left">
-                <FaExclamationCircle className="text-red-500 mt-1 shrink-0" />
-                <div>
-                  <h4 className="text-sm font-bold text-red-700">Risk Disclaimer</h4>
-                  <p className="text-xs text-red-600 leading-relaxed">
-                    Cryptocurrency trading is a high-risk business. Users should conduct their own research before making any deposits.
-                  </p>
-                </div>
-              </div>
+              <div className="max-w-md mx-auto mt-6 px-4">
+      <div className="bg-[#fff5f5] border border-[#ffebeb] rounded-2xl p-6 relative overflow-hidden">
+        {/* Red accent bar on the left */}
+        
+        <div className="flex gap-3">
+          <div className="text-[#ff4d4d] shrink-0 mt-1">
+            <FaExclamationCircle size={20} />
+          </div>
+          
+          <div className="flex flex-col gap-2">
+            <h3 className="text-[#8b0000] font-bold text-lg leading-tight">
+              Risk Disclaimer
+            </h3>
+            
+            <p className="text-[#a14a4a] text-sm leading-relaxed font-medium">
+              Cryptocurrency trading is a high-risk business. Users should 
+              trade carefully and only deposit money they can afford to 
+              lose in case of losses. Do not use savings or emergency funds 
+              for trading. By depositing, you acknowledge that you have 
+              read and understood this warning, and agree that no 
+              reversals can be issued once funds have been deposited.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+              <Mpesa/>
             </div>
           )}
 

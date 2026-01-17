@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle , FaWallet } from "react-icons/fa";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,6 +47,7 @@ function Navbar() {
       onClick={toggleDropdown} 
       className="bg-green-100 text-green-600 font-semibold px-3 py-1 rounded inline-flex items-center gap-1 hover:bg-green-200 transition-colors relative z-50"
     >
+      <FaWallet />
       $0.00
       <span className="text-[10px]">{isOpen ? '▲' : '▼'}</span>
     </button>
@@ -64,8 +65,8 @@ function Navbar() {
           <h2 className="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Account Balance</h2>
           
           <div className="flex gap-2 mb-4">
-            <button className="flex-1 text-xs p-2 bg-[#14d39a] text-white font-bold rounded-lg">Real</button>
-            <button className="flex-1 text-xs bg-gray-50 text-gray-800 font-bold rounded-lg border border-gray-200">Demo</button>
+            <button className="flex-1 text-sm py-2 bg-[#14d39a] text-white font-bold rounded-lg">Real</button>
+            <button className="flex-1 text-sm py-2 bg-gray-50 text-gray-800 font-bold rounded-lg border border-gray-200">Demo</button>
           </div>
 
           <div className="flex justify-between items-center p-3 bg-[#f8fbff] rounded-lg border border-[#eef2f8] mb-4">

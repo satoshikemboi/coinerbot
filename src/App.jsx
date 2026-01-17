@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard';
 import Deposit from './components/Deposit';
 import Withdraw from './components/Withdraw';
 import DepositCrypto from './components/DepositCrypto';
+import Mpesa from './components/Mpesa';
 
 const MainLayout = () => {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/deposit" element={<Deposit />} />
         <Route path="/withdraw" element={<Withdraw />} />
         <Route path="/deposit/crypto" element={<DepositCrypto />} />
+        <Route path="/mpesa" element={<Mpesa />} />
       </Route>
     </Routes>
   );
