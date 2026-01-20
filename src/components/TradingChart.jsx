@@ -29,7 +29,7 @@ const TradingChart = ({ activeMarket, timeFrame = '1d', chartType = 'Candle' }) 
   if (error) {
     return (
       <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
-        <div className="h-[450px] flex flex-col items-center justify-center">
+        <div className="h-112.5 flex flex-col items-center justify-center">
           <div className="text-red-500 mb-2">Error loading chart data</div>
           <div className="text-slate-400 text-sm">Using sample data</div>
         </div>
@@ -40,7 +40,7 @@ const TradingChart = ({ activeMarket, timeFrame = '1d', chartType = 'Candle' }) 
   if (isLoading) {
     return (
       <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
-        <div className="h-[450px] flex items-center justify-center">
+        <div className="h-112.5 flex items-center justify-center">
           <div className="text-slate-400">Loading chart data...</div>
         </div>
       </div>
@@ -50,7 +50,7 @@ const TradingChart = ({ activeMarket, timeFrame = '1d', chartType = 'Candle' }) 
   if (!candleData || candleData.length === 0) {
     return (
       <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
-        <div className="h-[450px] flex items-center justify-center">
+        <div className="h-112.5 flex items-center justify-center">
           <div className="text-slate-400">No chart data available</div>
         </div>
       </div>
@@ -173,7 +173,7 @@ const TradingChart = ({ activeMarket, timeFrame = '1d', chartType = 'Candle' }) 
 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6">
-      <div className="h-[450px]" ref={containerRef}>
+      <div className="h-112.5" ref={containerRef}>
         <svg width={width} height={height} className="w-full h-full">
           {/* Grid background */}
           <rect

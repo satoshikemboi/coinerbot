@@ -1,6 +1,5 @@
-// App.jsx - Updated version
 import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
@@ -16,7 +15,6 @@ import Card from './components/Card';
 import SpotTrading from './components/SpotTrading';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Create QueryClient instance
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -50,7 +48,13 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/markets" element={<Markets />} />
-          <Route path="/bots" element={<Bots />} />
+          
+          {/* --- UPDATED BOTS ROUTING --- */}
+          {/* 1. Redirect /bots to a default category like /bots/dca */}
+          <Route path="/bots" element={<Navigate to="/bots/dca" replace />} />
+          {/* 2. Dynamic route for categories */}
+          <Route path="/bots/:category" element={<Bots />} />
+          
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/deposit" element={<Deposit />} />
           <Route path="/withdraw" element={<Withdraw />} />

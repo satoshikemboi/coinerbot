@@ -1,8 +1,31 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ArrowUp } from 'lucide-react';
-import Markets from './Markets';
+
+// --- NEW Component: Real Portfolio Balance (from image) ---
+const MainBalanceCard = () => {
+  return (
+    <div className="bg-[#0a1f2c] p-6 rounded-3xl flex flex-col gap-4 mb-8 shadow-lg w-full">
+      <div className="space-y-1">
+        <p className="text-gray-400 text-sm font-medium">Real Portfolio</p>
+        <div className="flex items-center gap-3">
+          <h1 className="text-white text-3xl md:text-4xl font-bold">$0.00</h1>
+          <div className="flex items-center text-emerald-400 text-sm font-semibold mt-2">
+            <span className="mr-1">↑</span>1.20%
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-3">
+        <Link to="/deposit" className="bg-[#14d39a] hover:bg-[#11b886] text-[#0a1f2c] px-6 md:px-8 py-2.5 rounded-xl font-bold transition-colors text-sm text-center">
+          Deposit
+        </Link>
+        <Link to="/withdraw" className="bg-[#1e2d3d] hover:bg-[#2a3c50] text-white px-6 md:px-8 py-2.5 rounded-xl font-bold transition-colors text-sm text-center">
+          Withdraw
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 // Live Watchlist Item Component
 const WatchlistItem = ({ symbol, name, price, change, color }) => {
@@ -56,16 +79,16 @@ const PortfolioCard = ({ symbol, name, price, change, amount }) => {
         </div>
         <div className="text-right">
           <div className="font-bold text-slate-800 text-sm">${price.toLocaleString()}</div>
-          <div className="text-[10px] text-slate-400 font-semibold uppercase">Holdings: {amount} {symbol}</div>
-          <div className="font-bold text-md text-emerald-600">Value: ${value}</div>
+          <div className="text-[10px] text-slate-400 font-semibold uppercase">Holdings: {amount}</div>
+          <div className="font-bold text-md text-emerald-600">${value}</div>
         </div>
       </div>
       
       <div className="flex justify-between items-center mt-6">
-        <button className="bg-emerald-500 text-white px-6 py-2 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-emerald-600 transition shadow-sm shadow-emerald-200">
+        <button className="bg-emerald-500 text-white px-6 py-2 rounded-sm text-sm font-bold flex items-center gap-2 hover:bg-emerald-600 transition shadow-sm">
           <ArrowUp size={14} /> Trade
         </button>
-        <span className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">Live Updates</span>
+        <span className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">Live</span>
       </div>
     </div>
   );
@@ -75,21 +98,16 @@ const Dashboard = () => {
   const [marketData, setMarketData] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Configuration for your specific portfolio/watchlist
   const assets = [
     { symbol: 'BTC', name: 'Bitcoin', amount: 0.00000001, color: 'border-orange-400' },
     { symbol: 'ETH', name: 'Ethereum', amount: 0.000001, color: 'border-blue-500' },
     { symbol: 'TRX', name: 'Tron', amount: 0.01, color: 'border-red-500' },
     { symbol: 'SOL', name: 'Solana', amount: 0.0005, color: 'border-purple-500' },
     { symbol: 'BNB', name: 'Binance', amount: 0.00004, color: 'border-yellow-400' },
-    { symbol: 'DOT', name: 'Polkadot', amount: 0.0005, color: 'border-pink-500' },
-    { symbol: 'XRP', name: 'Ripple', amount: 0.0005, color: 'border-slate-400' },
   ];
 
   useEffect(() => {
     const symbols = assets.map(a => `${a.symbol.toLowerCase()}usdt`);
-    
-    // Initial Fetch
     fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${JSON.stringify(symbols.map(s => s.toUpperCase()))}`)
       .then(res => res.json())
       .then(data => {
@@ -104,68 +122,67 @@ const Dashboard = () => {
         setLoading(false);
       });
 
-    // WebSocket for Real-time
     const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbols.map(s => `${s}@ticker`).join('/')}`);
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       const symbol = data.s.replace('USDT', '');
       setMarketData(prev => ({
         ...prev,
-        [symbol]: {
-          price: parseFloat(data.c),
-          change: parseFloat(data.P)
-        }
+        [symbol]: { price: parseFloat(data.c), change: parseFloat(data.P) }
       }));
     };
-
     return () => ws.close();
   }, []);
 
   if (loading) return <div className="p-20 text-center font-bold text-slate-400">Loading your assets...</div>;
 
   return (
-    <div className="flex min-h-screen bg-slate-50 px-32 pt-10 gap-8 font-sans">
-      {/* Sidebar: Watchlist */}
-      <div className="w-80 shrink-0">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="font-bold text-2xl text-slate-800">Watchlist</h2>
-          <Link 
-    to="/Markets" 
-    className="text-emerald-500 text-sm font-bold hover:underline"
-  >
-    See All
-  </Link>
-        </div>
+    <div className="min-h-screen bg-slate-50 font-sans">
+      <div className="max-w-7xl mx-auto px-4 md:px-10 lg:px-20 py-8 flex flex-col md:flex-row gap-8">
         
-        <div className="space-y-3">
-          {assets.map(asset => (
-            <WatchlistItem 
-              key={asset.symbol}
-              symbol={asset.symbol}
-              name={asset.name}
-              price={marketData[asset.symbol]?.price || 0}
-              change={marketData[asset.symbol]?.change || 0}
-              color={asset.color}
-            />
-          ))}
-        </div>
-      </div>
+        {/* Main Content Area (Balance + Portfolio) */}
+        <div className="flex-1 order-1 md:order-2">
+          {/* New Portfolio Balance Card */}
+          <MainBalanceCard />
 
-      {/* Main Content: Portfolio */}
-      <div className="flex-1">
-        <h2 className="font-bold text-2xl text-slate-800 mb-6">Your Portfolio</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {assets.map(asset => (
-            <PortfolioCard 
-              key={asset.symbol}
-              symbol={asset.symbol}
-              name={asset.name}
-              price={marketData[asset.symbol]?.price || 0}
-              change={marketData[asset.symbol]?.change || 0}
-              amount={asset.amount}
-            />
-          ))}
+          <h2 className="font-bold text-2xl text-slate-800 mb-6">Your Portfolio</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            {assets.map(asset => (
+              <PortfolioCard 
+                key={asset.symbol}
+                symbol={asset.symbol}
+                name={asset.name}
+                price={marketData[asset.symbol]?.price || 0}
+                change={marketData[asset.symbol]?.change || 0}
+                amount={asset.amount}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Sidebar (Watchlist) */}
+        <div className="w-full md:w-80 shrink-0 order-2 md:order-1">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="font-bold text-2xl text-slate-800">Watchlist</h2>
+            <Link to="/Markets" className="text-emerald-500 text-sm font-bold hover:underline">
+              See All
+            </Link>
+          </div>
+          
+          <div className="space-y-3">
+            {assets.map(asset => (
+              <WatchlistItem 
+                key={asset.symbol}
+                symbol={asset.symbol}
+                name={asset.name}
+                price={marketData[asset.symbol]?.price || 0}
+                change={marketData[asset.symbol]?.change || 0}
+                color={asset.color}
+              />
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
