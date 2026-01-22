@@ -6,7 +6,7 @@ const Withdraw = () => {
   const [selectedNetwork, setSelectedNetwork] = useState("");
   const [isNetworkOpen, setIsNetworkOpen] = useState(false);
 
-  const availableBalance = 12450.50;
+  const availableBalance = 0.00;
 
   const networks = [
     { id: "eth", name: "Ethereum (ERC20)", fee: "5.50", time: "5 mins" },
