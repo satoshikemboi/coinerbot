@@ -4,10 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 
-// Load environment variables
 dotenv.config();
-
-// Connect to Database
 connectDB();
 
 const app = express();
@@ -15,26 +12,28 @@ const app = express();
 const allowedOrigins = [
   "https://remocoin.com",
   "https://www.remocoin.com",
+  "https://remocoin.netlify.app",
   "http://localhost:5173",
-  "localhost:5173",
-  "https://remocoin.netlify.app"
+  "http://127.0.0.1:5173"
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
+  origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
+
+    return callback(new Error(`CORS blocked origin: ${origin}`));
   },
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+/* ✅ CRITICAL — handle preflight */
+app.options("*", cors());
 
 app.use(express.json());
 
@@ -44,8 +43,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRoutes);
 
-const PORT = process.env.PORT || 10000; 
-
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
+
