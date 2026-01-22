@@ -16,6 +16,7 @@ const allowedOrigins = [
   "https://remocoin.com",
   "https://www.remocoin.com",
   "http://localhost:5173",
+  "localhost:5173",
   "https://remocoin.netlify.app"
 ];
 

@@ -33,7 +33,7 @@ function Navbar() {
           <button className="w-8 h-8 bg-green-500 rounded-full text-white font-bold flex items-center justify-center">
             +
           </button>
-          <span className="text-green-600 font-bold text-lg">VentiCoin</span>
+          <span className="text-green-600 font-bold text-lg">RemoCoin</span>
         </Link>
       </div>
 
@@ -48,7 +48,7 @@ function Navbar() {
         {/* Desktop Accounts Dropdown */}
         <div className="relative group ml-2">
           <button className="text-gray-700 font-medium flex items-center gap-1 hover:text-green-500 py-2">
-            Accounts
+            Profile
             <FaChevronDown className="text-[10px]" />
           </button>
           <div className="absolute font-medium top-full left-0 mt-1 w-48 bg-white border border-gray-100 rounded shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all z-50">
