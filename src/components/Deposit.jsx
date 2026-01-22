@@ -94,20 +94,26 @@ const Deposit = () => {
             <FaExclamationCircle size={20} />
           </div>
           
-          <div className="flex flex-col gap-2">
-            <h3 className="text-[#8b0000] font-bold text-lg leading-tight">
-              Risk Disclaimer
-            </h3>
-            
-            <p className="text-[#a14a4a] text-sm leading-relaxed font-medium">
-              Cryptocurrency trading is a high-risk business. Users should 
-              trade carefully and only deposit money they can afford to 
-              lose in case of losses. Do not use savings or emergency funds 
-              for trading. By depositing, you acknowledge that you have 
-              read and understood this warning, and agree that no 
-              reversals can be issued once funds have been deposited.
-            </p>
-          </div>
+          <div className="flex flex-col gap-3 p-4 bg-red-50/50 rounded-2xl border border-red-100">
+  {/* Header */}
+  <div className="flex items-center gap-2">
+    {/* Optional: Added an icon to make it more professional on mobile */}
+    <div className="w-1.5 h-4 bg-[#8b0000] rounded-full" />
+    <h3 className="text-[#8b0000] font-black text-sm md:text-lg uppercase tracking-tight">
+      Risk Disclaimer
+    </h3>
+  </div>
+  
+  {/* Warning Message */}
+  <p className="text-[#a14a4a] text-[11px] md:text-xs leading-relaxed font-semibold text-left">
+    Cryptocurrency trading is a high-risk business. Users should 
+    trade carefully and only deposit money they can afford to 
+    lose in case of losses. Do not use savings or emergency funds 
+    for trading. By depositing, you acknowledge that you have 
+    read and understood this warning, and agree that no 
+    reversals can be issued once funds have been deposited.
+  </p>
+</div>
         </div>
       </div>
     </div>
