@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom"; // Use NavLink for active styling
-import { FaUserCircle, FaWallet, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { FaWallet, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 
 function Navbar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false); // Wallet dropdown
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile sidebar
   const [isAccountOpen, setIsAccountOpen] = useState(false); // Mobile sub-menu toggle
@@ -10,10 +11,24 @@ function Navbar() {
   const toggleDropdown = () => setIsOpen(!isOpen);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
+  // --- LOGIC: Redirect to warning page instead of showing popup ---
+  const handleFuturesClick = (e) => {
+    const hasAccepted = sessionStorage.getItem("futures_accepted");
+    
+    if (!hasAccepted) {
+      // 1. Prevent direct navigation to /futures
+      e.preventDefault(); 
+      // 2. Close mobile menu if it's open
+      setIsMobileMenuOpen(false); 
+      // 3. Send them to the dedicated warning component page
+      navigate("/futures-warning"); 
+    }
+  };
+
   // Helper function for active link styles
-  const getLinkStyles = ({ isActive }) => 
-    isActive 
-      ? "bg-green-500 text-white px-3 py-2 rounded font-semibold shadow-sm transition-all" 
+  const getLinkStyles = ({ isActive }) =>
+    isActive
+      ? "bg-green-500 text-white px-3 py-2 rounded font-semibold shadow-sm transition-all"
       : "text-gray-700 hover:text-green-500 font-medium px-3 py-2 transition-all";
 
   const getMobileLinkStyles = ({ isActive }) =>
@@ -23,6 +38,7 @@ function Navbar() {
 
   return (
     <nav className="bg-white shadow-md px-4 md:px-6 py-4 flex items-center justify-between sticky top-0 z-100">
+      
       {/* --- Left Section: Logo & Mobile Toggle --- */}
       <div className="flex items-center gap-3">
         <button className="md:hidden text-gray-700 text-2xl" onClick={toggleMobileMenu}>
@@ -42,14 +58,22 @@ function Navbar() {
         <NavLink to="/Dashboard" className={getLinkStyles}>Dashboard</NavLink>
         <NavLink to="/Markets" className={getLinkStyles}>Markets</NavLink>
         <NavLink to="/spot-trading" className={getLinkStyles}>Spot Trading</NavLink>
-        <NavLink to="/futures" className={getLinkStyles}>Futures</NavLink>
+        
+        {/* Futures Link with Logic */}
+        <NavLink 
+          to="/futures" 
+          onClick={handleFuturesClick} 
+          className={getLinkStyles}
+        >
+          Futures
+        </NavLink>
+        
         <NavLink to="/Bots" className={getLinkStyles}>Bots</NavLink>
         
         {/* Desktop Accounts Dropdown */}
         <div className="relative group ml-2">
           <button className="text-gray-700 font-medium flex items-center gap-1 hover:text-green-500 py-2">
-            Profile
-            <FaChevronDown className="text-[10px]" />
+            Profile <FaChevronDown className="text-[10px]" />
           </button>
           <div className="absolute font-medium top-full left-0 mt-1 w-48 bg-white border border-gray-100 rounded shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all z-50">
             <Link to="/deposit" className="block px-4 py-2 hover:bg-green-50">Deposit</Link>
@@ -61,13 +85,11 @@ function Navbar() {
         </div>
       </div>
 
-      {/* --- Right Section: Balance & User --- */}
+      {/* --- Right Section: Balance & Wallet --- */}
       <div className="flex items-center gap-2 md:gap-4">
         <div className="relative pr-2">
           <button onClick={toggleDropdown} className="bg-green-100 text-green-600 font-semibold px-2 py-2 md:px-3 md:py-1 rounded inline-flex items-center gap-1 hover:bg-green-200 transition-colors relative z-50 text-md md:text-base">
-            <FaWallet />
-            $0.00
-            <span className="text-[10px]">{isOpen ? '▲' : '▼'}</span>
+            <FaWallet /> $0.00 <span className="text-[10px]">{isOpen ? '▲' : '▼'}</span>
           </button>
 
           {isOpen && (
@@ -107,11 +129,20 @@ function Navbar() {
               <NavLink to="/Dashboard" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Dashboard</NavLink>
               <NavLink to="/Markets" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Markets</NavLink>
               <NavLink to="/spot-trading" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Spot Trading</NavLink>
-              <NavLink to="/futures" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Futures</NavLink>
+              
+              {/* Mobile Futures Link */}
+              <NavLink 
+                to="/futures" 
+                onClick={handleFuturesClick} 
+                className={getMobileLinkStyles}
+              >
+                Futures
+              </NavLink>
+              
               <NavLink to="/Bots" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Bots</NavLink>
               
               {/* Mobile Accounts Accordion */}
-              <div className="mt-2">
+              <div className="mt-2 text-left">
                 <button 
                   onClick={() => setIsAccountOpen(!isAccountOpen)}
                   className="w-full flex justify-between items-center text-gray-800 font-semibold p-3 border-b"
@@ -125,7 +156,6 @@ function Navbar() {
                     <Link to="/account/transactions" onClick={toggleMobileMenu} className="p-3 border-b border-gray-100">Transactions</Link>
                     <Link to="/account/verification" onClick={toggleMobileMenu} className="p-3 border-b border-gray-100">Verification (KYC)</Link>
                     <Link to="/account/support" onClick={toggleMobileMenu} className="p-3">Live Support</Link>
-                    {/* PROFILE REMOVED FROM HERE */}
                   </div>
                 )}
               </div>
