@@ -5,130 +5,112 @@ import Mpesa from "./Mpesa";
 import Card from "./Card";
 
 const Deposit = () => {
-  // State to track which tab is active: 'mobile', 'crypto', or 'card'
   const [activeTab, setActiveTab] = useState("mobile");
   const [selectedAsset, setSelectedAsset] = useState(null);
+
   const handleChange = (e) => {
     setSelectedAsset(e.target.value);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 flex flex-col items-center">
+    <div className="min-h-screen bg-gray-50 py-6 md:py-12 px-4 flex flex-col items-center">
       {/* Header Section */}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-[#0a1f44] mb-2">Fund Your Account</h1>
-        <p className="text-gray-500">Choose your preferred deposit method below</p>
+      <div className="text-center mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#0a1f44] mb-2">Fund Your Account</h1>
+        <p className="text-sm md:text-base text-gray-500">Choose your preferred deposit method below</p>
       </div>
 
       {/* Main Container */}
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="w-full max-w-2xl bg-white rounded-2xl md:rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
         
-        {/* Tabs Navigation */}
-        <div className="flex p-6 bg-gray-50 gap-2">
-          <button
-            onClick={() => setActiveTab("mobile")}
-            className={`flex-1 flex items-center justify-center gap-1 py-1 text-gray-800 rounded-lg font-bold transition-all ${
-              activeTab === "mobile"
-                ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
-                : "text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            <FaPhoneAlt /> Mobile
-          </button>
-          
-          <button
-            onClick={() => setActiveTab("crypto")}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-bold transition-all ${
-              activeTab === "crypto"
-                ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
-                : "text-gray-500 hover:bg-gray-100"
-            }`}
-          >
-            <FaWallet /> Crypto
-          </button>
-
-          <button
-            onClick={() => setActiveTab("card")}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-bold transition-all ${
-              activeTab === "card"
-                ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
-                : "text-gray-500 hover:bg-gray-100"
-            }`}
-          >
-            <FaCreditCard /> Card
-          </button>
+        {/* Tabs Navigation - Responsive Flex/Grid */}
+        <div className="flex flex-row p-2 md:p-6 bg-gray-50 gap-1 md:gap-2">
+          {[
+            { id: "mobile", icon: <FaPhoneAlt />, label: "Mobile" },
+            { id: "crypto", icon: <FaWallet />, label: "Crypto" },
+            { id: "card", icon: <FaCreditCard />, label: "Card" }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 py-2 md:py-3 rounded-xl font-bold text-xs md:text-sm transition-all ${
+                activeTab === tab.id
+                  ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+            >
+              <span className="text-sm md:text-base">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         {/* Dynamic Content Area */}
-        <div className="p-8 bg-orange-50/30">
+        <div className="p-4 md:p-8 bg-orange-50/10">
           {activeTab === "mobile" && (
             <div className="flex flex-col items-center text-center animate-fadeIn">
-              {/* Icon Circle */}
-              <div className="w-20 h-20 bg-linear-to-b from-green-500 to-green-400 rounded-full flex items-center justify-center text-white text-3xl mb-6 shadow-lg">
+              {/* Icon Circle - Scaled for mobile */}
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-linear-to-b from-green-500 to-green-400 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl mb-4 md:mb-6 shadow-lg">
                 <FaPhoneAlt />
               </div>
 
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">M-Pesa Payment</h2>
-              <p className="text-gray-500 mb-8">Quick deposits via mobile money</p>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-1">M-Pesa Payment</h2>
+              <p className="text-xs md:text-sm text-gray-500 mb-6 md:mb-8">Quick deposits via mobile money</p>
 
               <div className="w-full max-w-xs">
-                <p className="text-left text-sm font-bold text-gray-700 mb-3">Mobile Money Provider</p>
-                <div className="bg-white rounded-xl p-6 flex justify-center items-center mb-4 transition-transform hover:scale-105">
-                  {/* Placeholder for M-Pesa Logo */}
+                <p className="text-left text-[10px] md:text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">Mobile Money Provider</p>
+                <div className="bg-white rounded-xl p-4 md:p-6 flex justify-center items-center mb-4 border border-gray-100 shadow-sm transition-transform active:scale-95">
                   <img 
                     src="./Mpesa.png" 
                     alt="M-Pesa" 
-                    className="h-32 object-contain"
+                    className="h-16 md:h-32 object-contain"
                   />
                 </div>
-                <p className="text-xs text-gray-400 italic">Currently, only M-Pesa is supported</p>
+                <p className="text-[10px] text-gray-400 italic">Currently, only M-Pesa is supported</p>
               </div>
 
-              {/* Risk Disclaimer */}
-              <div className="max-w-md mx-auto mt-6 px-4">
-      <div className="bg-[#fff5f5] border border-[#ffebeb] rounded-2xl p-6 relative overflow-hidden">
-        {/* Red accent bar on the left */}
-        
-        <div className="flex gap-3">
-          <div className="text-[#ff4d4d] shrink-0 mt-1">
-            <FaExclamationCircle size={20} />
-          </div>
-          
-          <div className="flex flex-col gap-3 p-4 bg-red-50/50 rounded-2xl border border-red-100">
-  {/* Header */}
-  <div className="flex items-center gap-2">
-    {/* Optional: Added an icon to make it more professional on mobile */}
-    <div className="w-1.5 h-4 bg-[#8b0000] rounded-full" />
-    <h3 className="text-[#8b0000] font-black text-sm md:text-lg uppercase tracking-tight">
-      Risk Disclaimer
-    </h3>
-  </div>
-  
-  {/* Warning Message */}
-  <p className="text-[#a14a4a] text-[11px] md:text-xs leading-relaxed font-semibold text-left">
-    Cryptocurrency trading is a high-risk business. Users should 
-    trade carefully and only deposit money they can afford to 
-    lose in case of losses. Do not use savings or emergency funds 
-    for trading. By depositing, you acknowledge that you have 
-    read and understood this warning, and agree that no 
-    reversals can be issued once funds have been deposited.
-  </p>
-</div>
-        </div>
-      </div>
-    </div>
-              <Mpesa/>
+              {/* Risk Disclaimer - Integrated and Responsive */}
+              <div className="w-full mt-8">
+                <div className="bg-red-50/50 border border-red-100 rounded-2xl p-4 md:p-5">
+                  <div className="flex gap-3">
+                    <div className="text-red-500 shrink-0 mt-0.5">
+                      <FaExclamationCircle size={18} />
+                    </div>
+                    
+                    <div className="flex flex-col gap-2 text-left">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1 h-3.5 bg-red-700 rounded-full" />
+                        <h3 className="text-red-800 font-black text-xs md:text-sm uppercase tracking-tight">
+                          Risk Disclaimer
+                        </h3>
+                      </div>
+                      
+                      <p className="text-red-900/70 text-[10px] md:text-xs leading-relaxed font-semibold">
+                        Cryptocurrency trading is a high-risk business. Users should 
+                        trade carefully and only deposit money they can afford to 
+                        lose. Do not use savings or emergency funds. By depositing, 
+                        you acknowledge that no reversals can be issued once funds 
+                        have been deposited.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full mt-6">
+                <Mpesa />
+              </div>
             </div>
           )}
 
           {activeTab === "crypto" && (
-            <div>
+            <div className="w-full">
               <DepositCrypto selectedAsset={selectedAsset} handleChange={handleChange} />
             </div>
           )}
 
           {activeTab === "card" && (
-            <div className="py-20 text-center text-gray-500 italic">
+            <div className="w-full py-10 md:py-20 text-center">
               <Card />
             </div>
           )}
