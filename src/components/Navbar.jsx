@@ -21,7 +21,7 @@ function Navbar() {
       // 2. Close mobile menu if it's open
       setIsMobileMenuOpen(false); 
       // 3. Send them to the dedicated warning component page
-      navigate("/futures-warning"); 
+      navigate("/futures"); 
     }
   };
 
@@ -58,29 +58,22 @@ function Navbar() {
         <NavLink to="/Dashboard" className={getLinkStyles}>Dashboard</NavLink>
         <NavLink to="/Markets" className={getLinkStyles}>Markets</NavLink>
         <NavLink to="/spot-trading" className={getLinkStyles}>Spot Trading</NavLink>
-        
-        {/* Futures Link with Logic */}
-        <NavLink 
-          to="/futures" 
-          onClick={handleFuturesClick} 
-          className={getLinkStyles}
-        >
-          Futures
-        </NavLink>
-        
+        <NavLink to="/futures" className={getLinkStyles}>Futures</NavLink>
         <NavLink to="/Bots" className={getLinkStyles}>Bots</NavLink>
         
         {/* Desktop Accounts Dropdown */}
         <div className="relative group ml-2">
           <button className="text-gray-700 font-medium flex items-center gap-1 hover:text-green-500 py-2">
-            Profile <FaChevronDown className="text-[10px]" />
+            Account <FaChevronDown className="text-[10px]" />
           </button>
           <div className="absolute font-medium top-full left-0 mt-1 w-48 bg-white border border-gray-100 rounded shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all z-50">
             <Link to="/deposit" className="block px-4 py-2 hover:bg-green-50">Deposit</Link>
             <Link to="/withdraw" className="block px-4 py-2 hover:bg-green-50">Withdraw</Link>
-            <Link to="/account/transactions" className="block px-4 py-2 hover:bg-green-50">Transactions</Link>
-            <Link to="/account/verification" className="block px-4 py-2 hover:bg-green-50">Verification (KYC)</Link>
-            <Link to="/account/support" className="block px-4 py-2 hover:bg-green-50">Live Support</Link>
+            <Link to="/transactions" className="block px-4 py-2 hover:bg-green-50">Transactions</Link>
+            <Link to="/profile" className="block px-4 py-2 hover:bg-green-50">Profile</Link>
+            <Link to="/verification" className="block px-4 py-2 hover:bg-green-50">Verification (KYC)</Link>
+            <Link to="/support" className="block px-4 py-2 hover:bg-green-50">Live Support</Link>
+            <Link to="/help" className="block px-4 py-2 hover:bg-green-50">Help center</Link>
           </div>
         </div>
       </div>
@@ -129,16 +122,7 @@ function Navbar() {
               <NavLink to="/Dashboard" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Dashboard</NavLink>
               <NavLink to="/Markets" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Markets</NavLink>
               <NavLink to="/spot-trading" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Spot Trading</NavLink>
-              
-              {/* Mobile Futures Link */}
-              <NavLink 
-                to="/futures" 
-                onClick={handleFuturesClick} 
-                className={getMobileLinkStyles}
-              >
-                Futures
-              </NavLink>
-              
+              <NavLink to="/futures" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Futures</NavLink>
               <NavLink to="/Bots" onClick={toggleMobileMenu} className={getMobileLinkStyles}>Bots</NavLink>
               
               {/* Mobile Accounts Accordion */}

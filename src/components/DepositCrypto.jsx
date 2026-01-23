@@ -169,22 +169,22 @@ export default function CryptoPaymentFlow() {
 
   // --- VIEW 3: INITIAL DEPOSIT SCREEN ---
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6 w-full max-w-[95%] md:max-w-md mx-auto bg-[#f8faff] min-h-screen">
+    <div className="flex flex-col gap-6 p-2 md:p-6 w-full max-w-[95%] md:max-w-md mx-auto bg-[#f8faff] min-h-screen">
       <div className="flex flex-col gap-2">
         <label className="font-bold text-gray-800 text-xs md:text-sm ml-1">Deposit Amount (USD)</label>
         <div className="relative group">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 font-bold text-lg">$</span>
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 font-bold text-md">$</span>
           <input 
             type="number" 
             value={amount} 
             onChange={(e) => setAmount(e.target.value)} 
-            className="w-full pl-10 pr-4 py-3.5 bg-white border border-gray-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all text-lg font-medium shadow-sm" 
+            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-100 rounded-md outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all text-lg font-medium shadow-sm" 
             placeholder="0.00"
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-[2.5rem] p-6 md:p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
+      <div className="bg-white rounded-md p-2 md:p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
         <div className="w-20 h-20 rounded-3xl shadow-2xl shadow-blue-100 flex items-center justify-center bg-white border border-gray-50 p-4 mb-6 transform -rotate-3 hover:rotate-0 transition-transform">
           <img src={selectedAsset.logo} alt="Logo" className="w-full h-full object-contain" />
         </div>

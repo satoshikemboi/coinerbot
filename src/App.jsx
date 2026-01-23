@@ -15,6 +15,11 @@ import Card from './components/Card';
 import SpotTrading from './components/SpotTrading';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import FuturesModal from './components/FuturesModal';
+import Transactions from './components/Transactions';
+import Verification from './components/Verification';
+import Support from './components/Support';
+import Help from './components/Help';
+import Profile from './components/Profile';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,6 +69,11 @@ function App() {
           <Route path="/card" element={<Card />} />
           <Route path="/spot-trading" element={<SpotTrading />} />
           <Route path="/futures" element={<FuturesModal />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/verification" element={<Verification />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/help" element={<Help/>} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </QueryClientProvider>
