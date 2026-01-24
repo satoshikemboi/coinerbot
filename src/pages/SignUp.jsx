@@ -35,12 +35,35 @@ function SignUp() {
     setLoading(true);
     
     try {
-      // Your Fetch Logic Here
-      console.log("Submitting...");
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const res = await fetch("https://remocoin.onrender.com/api/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          name, 
+          email, 
+          password, 
+          phoneNumber, 
+          country 
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // If the server sends a 400, this will tell you exactly WHY
+        alert(data.message || "Signup failed");
+        return;
+      }
+
+      alert("Account created! You can now login.");
+      // Redirect to login page
+      window.location.href = "/login"; 
+
     } catch (error) {
-      console.error(error);
+      console.error("Signup error:", error);
+      alert("Network error. Is the server awake?");
     } finally {
       setLoading(false);
     }
