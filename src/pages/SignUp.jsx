@@ -106,7 +106,7 @@ function SignUp() {
           <form className="space-y-4" onSubmit={handleSignup}>
             {/* Full Name  */}
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-gray-600 ml-1">Full Name</label>
+              <label className="block text-sm font-bold text-gray-600 ml-1">Full Name</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="h-4 w-4 text-gray-400 group-focus-within:text-emerald-500" />
@@ -119,7 +119,7 @@ function SignUp() {
 
             <div className="space-y-1">
 
-              <label className="block text-sm font-medium text-gray-600 ml-1">Email</label>
+              <label className="block text-sm font-bold text-gray-600 ml-1">Email</label>
 
               <div className="relative group">
 
@@ -153,7 +153,7 @@ function SignUp() {
             <div className="grid grid-cols-2 gap-4">
                {/* Phone Input */}
                <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-600 ml-1">Phone</label>
+                <label className="block text-sm font-bpld text-gray-600 ml-1">Phone</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Phone className="h-4 w-4 text-gray-400 group-focus-within:text-emerald-500" />
@@ -163,7 +163,7 @@ function SignUp() {
               </div>
               {/* Country Input */}
               <div className="space-y-1">
-                <label className="block text-sm font-medium text-gray-600 ml-1">Country</label>
+                <label className="block text-sm font-bold text-gray-600 ml-1">Country</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Globe className="h-4 w-4 text-gray-400 group-focus-within:text-emerald-500" />
@@ -176,7 +176,7 @@ function SignUp() {
              {/* Password Section */}
 <div className="space-y-1">
   <div className="flex justify-between items-center">
-    <label className="block text-sm font-medium text-gray-600 ml-1">Password</label>
+    <label className="block text-sm font-bold text-gray-600 ml-1">Password</label>
     {/* Dynamic Strength Label */}
     <span className={`text-[10px] font-bold uppercase ${
       password.length === 0 ? 'text-gray-300' :
@@ -218,7 +218,7 @@ function SignUp() {
 
 {/* Confirm Password Section */}
 <div className="space-y-1">
-  <label className="block text-sm font-medium text-gray-600 ml-1">Confirm Password</label>
+  <label className="block text-sm font-bold text-gray-600 ml-1">Confirm Password</label>
   <div className="relative group">
     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
       <Lock className={`h-4 w-4 transition-colors ${confirmPassword === password && password !== "" ? 'text-emerald-500' : 'text-gray-400'}`} />

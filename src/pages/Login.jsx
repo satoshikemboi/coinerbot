@@ -45,7 +45,7 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center font-nunito p-4">
       {/* Badge */}
       <div className="flex items-center justify-center gap-2 w-fit mx-auto border border-emerald-200 rounded-full py-2 px-4 mb-4 bg-emerald-50 shadow-sm">
         <ShieldCheck className="w-4 h-4 text-emerald-500" />
@@ -67,7 +67,7 @@ function Login() {
 
       {/* Tab Switcher */}
       <div className="w-full max-w-lg mb-1 p-1 bg-gray-200/50 rounded-xl flex">
-        <div className="flex-1 py-2 text-center text-sm font-bold bg-emerald-400 text-gray-100 rounded-lg shadow-sm">
+        <div className="flex-1 py-2 text-center text-sm font-bold bg-emerald-500 text-gray-100 rounded-lg shadow-sm">
           Login
         </div>
         <Link
