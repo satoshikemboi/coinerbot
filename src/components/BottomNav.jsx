@@ -18,7 +18,7 @@ const BottomNav = () => {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-800 pb-[env(safe-area-inset-bottom)]">
+    <nav className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-emerald-500 border-t rounded-t-xl border-gray-200 pb-[env(safe-area-inset-bottom)]">
       <div className="grid h-full w-full grid-cols-5 mx-auto">
         {navItems.map((item) => (
           <NavLink
@@ -29,8 +29,8 @@ const BottomNav = () => {
             className={({ isActive }) =>
               `flex flex-col items-center justify-center transition-all duration-200 ${
                 isActive 
-                  ? 'text-blue-600 dark:text-blue-400' 
-                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                  ? 'text-gray-100 ' 
+                  : 'text-gray-100 hover:text-gray-700 dark:hover:text-gray-200'
               }`
             }
           >
