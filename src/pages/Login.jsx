@@ -58,10 +58,10 @@ function Login() {
       <div className="text-center mb-8">
         <h1 className="md:text-3xl text-2xl font-bold text-gray-800 tracking-tight">
           Welcome to {' '}
-          <span className="text-emerald-500">RemoCoin</span>
+          <span className="text-emerald-500">CoinerBot</span>
         </h1>
         <p className="text-gray-500 md:text-sm tracking-tight text-sm font-nunito font-medium mt-1">
-          Your trusted platform for cryptocurrency trading
+          Your trusted platform for cryptocurrency trading automation
         </p>
       </div>
 
