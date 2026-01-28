@@ -35,7 +35,7 @@ const Deposit = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex-1 flex flex-row items-center justify-center gap-1 md:gap-2 py-2 md:py-2 rounded-lg font-bold text-lg md:text-sm transition-all ${
                 activeTab === tab.id
-                  ? "bg-linear-to-r from-green-500 to-green-400 text-white shadow-md"
+                  ? "bg-green-500 text-white shadow-md"
                   : "text-gray-500 hover:bg-gray-100"
               }`}
             >
@@ -66,7 +66,7 @@ const Deposit = () => {
               </div>
 
               {/* Risk Disclaimer - Integrated and Responsive */}
-              <div className="w-full max-w-2/3 mt-8">
+              <div className="w-full max-w-4/5 mt-6">
                 <div className="bg-red-50/50 border border-red-100 rounded-2xl p-4 md:p-5">
                   <div className="flex gap-3">
                     <div className="text-red-500 shrink-0 mt-0.5">

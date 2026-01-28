@@ -45,7 +45,7 @@ export default function Mpesa() {
         </div>
 
         {/* Transaction Information Card */}
-        <div className="bg-white rounded-2xl p-5 border border-orange-100 shadow-sm">
+        <div className="bg-white rounded-2xl p-2.5 border border-orange-100 shadow-sm">
           <h3 className="text-gray-800 font-bold text-base mb-4">Transaction Information</h3>
           <div className="space-y-3 font-semibold text-sm">
             <div className="flex justify-between items-center text-gray-600">
@@ -65,7 +65,7 @@ export default function Mpesa() {
 
         {/* Action Button & Note */}
         <div className="flex flex-col gap-4 text-center">
-          <button className="w-full py-3 bg-green-500 text-white font-bold rounded-xl shadow-lg uppercase tracking-wide">
+          <button className="w-full py-2.5 bg-green-500 text-white font-bold rounded-xl shadow-lg uppercase tracking-wide">
             Pay with M-Pesa
           </button>
           
