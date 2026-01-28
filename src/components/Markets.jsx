@@ -7,7 +7,7 @@ const Markets = () => {
   const [activeTab, setActiveTab] = useState('all'); 
   const [favorites, setFavorites] = useState(['BTC', 'ETH']);
 
-  const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'usdcusdt', 'adausdt', 'xrpusdt', 'dogeusdt', 'maticusdt', 'dotusdt', 'ltcusdt', 'bchusdt', 'avaxusdt', 'linkusdt', 'xlmusdt', 'atomusdt', 'vetusdt', 'etcusdt', 'filusdt', 'trxusdt', 'egldusdt', 'aaveusdt', 'ftmusdt', 'axsususdt', 'sandusdt', 'galausdt'];
+  const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'usdcusdt', 'adausdt', 'xrpusdt', 'dogeusdt', 'maticusdt', 'dotusdt', 'ltcusdt', 'bchusdt', 'avaxusdt', 'linkusdt', 'xlmusdt', 'atomusdt', 'vetusdt', 'etcusdt', 'filusdt', 'trxusdt', 'egldusdt', 'aaveusdt'];
 
   useEffect(() => {
     const fetchInitialData = async () => {
