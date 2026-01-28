@@ -18,7 +18,7 @@ const Profile = () => {
         
         {/* Page Header - Centered on mobile, left-aligned on desktop */}
         <div className="mb-8 text-center md:text-left">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">RemoCoin Profile Settings</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Profile </h1>
           <p className="text-sm md:text-base text-gray-500">Manage your account settings and preferences</p>
         </div>
 

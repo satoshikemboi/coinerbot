@@ -1,9 +1,14 @@
 import React from 'react';
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Pages & Components
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import TermsOfService from './pages/TermsOfService';
 import Navbar from './components/Navbar';
+import BottomNav from './components/BottomNav'; // Ensure this path is correct
 import Markets from './components/Markets';
 import Bots from './components/Bots';
 import Dashboard from './components/Dashboard';
@@ -13,14 +18,12 @@ import DepositCrypto from './components/DepositCrypto';
 import Mpesa from './components/Mpesa';
 import Card from './components/Card';
 import SpotTrading from './components/SpotTrading';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import FuturesModal from './components/FuturesModal';
 import Transactions from './components/Transactions';
 import Verification from './components/Verification';
 import Support from './components/Support';
 import Help from './components/Help';
 import Profile from './components/Profile';
-import TermsOfService from './pages/TermsOfService';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,14 +35,23 @@ const queryClient = new QueryClient({
   },
 });
 
+/**
+ * MainLayout handles the shared UI for authenticated pages.
+ * - Shows Navbar (Top)
+ * - Shows BottomNav (Bottom, Mobile only via internal tailwind)
+ * - pb-20 on mobile ensures content isn't hidden by the fixed BottomNav
+ */
 const MainLayout = () => {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main>
+      
+      <main className="grow pb-20 md:pb-0">
         <Outlet />
       </main>
-    </>
+
+      <BottomNav />
+    </div>
   );
 };
 
@@ -47,21 +59,19 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        {/* --- Pages WITHOUT Navbar --- */}
+        {/* --- Pages WITHOUT Navbar or BottomNav --- */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
 
-        {/* --- Pages WITH Navbar --- */}
+        {/* --- Pages WITH Navbar and BottomNav --- */}
         <Route element={<MainLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/markets" element={<Markets />} />
           
-          {/* --- UPDATED BOTS ROUTING --- */}
-          {/* 1. Redirect /bots to a default category like /bots/dca */}
+          {/* Bots Routing */}
           <Route path="/bots" element={<Navigate to="/bots/dca" replace />} />
-          {/* 2. Dynamic route for categories */}
           <Route path="/bots/:category" element={<Bots />} />
           
           <Route path="/dashboard" element={<Dashboard />} />
@@ -78,6 +88,9 @@ function App() {
           <Route path="/help" element={<Help/>} />
           <Route path="/profile" element={<Profile />} />
         </Route>
+
+        {/* Fallback for 404 - Optional */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </QueryClientProvider>
   );
