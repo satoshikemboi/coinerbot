@@ -7,7 +7,7 @@ const Markets = () => {
   const [activeTab, setActiveTab] = useState('all'); 
   const [favorites, setFavorites] = useState(['BTC', 'ETH']);
 
-  const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'usdcusdt', 'adausdt', 'xrpusdt', 'dogeusdt', 'maticusdt', 'dotusdt', 'ltcusdt', 'bchusdt', 'avaxusdt', 'linkusdt', 'xlmusdt', 'atomusdt', 'vetusdt', 'etcusdt', 'filusdt', 'trxusdt', 'egldusdt', 'aaveusdt'];
+  const symbols = ['btcusdt', 'ethusdt', 'solusdt', 'usdcusdt', 'adausdt', 'xrpusdt', 'dogeusdt', 'maticusdt', 'dotusdt', 'ltcusdt', 'bchusdt', 'avaxusdt', 'linkusdt', 'xlmusdt', 'atomusdt', 'vetusdt', 'etcusdt', 'filusdt', 'trxusdt', 'egldusdt', 'aaveusdt', 'ftmusdt', 'axsususdt', 'sandusdt', 'galausdt'];
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -67,7 +67,7 @@ const Markets = () => {
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
-            <h1 className="font-bold text-3xl text-green-500">Markets</h1>
+            <h1 className="font-extrabold text-3xl text-green-600">Markets</h1>
             <p className="text-slate-500 text-md font-semibold">Quick market trading with immediate returns.</p>
           </div>
           <div className="relative w-full sm:w-64">

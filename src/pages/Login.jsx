@@ -89,7 +89,7 @@ function Login() {
           <form className="space-y-4" onSubmit={handleLogin}>
             {/* Email Field */}
             <div className="space-y-1">
-              <label className="block font-medium text-gray-600 text-sm ml-1">Email</label>
+              <label className="block font-bold text-gray-600 text-sm ml-1">Email</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Mail className="h-4 w-4 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
@@ -107,7 +107,7 @@ function Login() {
 
             {/* Password Field */}
             <div className="space-y-1">
-              <label className="block font-medium text-gray-600 text-sm ml-1">Password</label>
+              <label className="block font-bold text-gray-600 text-sm ml-1">Password</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Lock className="h-4 w-4 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
