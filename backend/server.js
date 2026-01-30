@@ -4,22 +4,18 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 
-/* Load env */
 dotenv.config();
 
-/* Connect DB */
 connectDB();
 
 const app = express();
 
-/* =======================
-   CORS — MUST BE FIRST
-======================= */
 app.use(cors({
   origin: [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://remocoin.netlify.app",
+    "https://coinerbot.netlify.app",
+    "https://coinerbot.vercel.app",
     "https://remocoin.vercel.app"
   ],
   credentials: true
@@ -28,9 +24,7 @@ app.use(cors({
 /* Handle preflight */
 app.options(/.*/, cors());
 
-/* =======================
-   Middlewares
-======================= */
+/*Middlewares*/
 app.use(express.json());
 
 /* =======================
