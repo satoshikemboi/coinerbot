@@ -15,7 +15,7 @@ app.use(cors({
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://coinerbot.netlify.app",
-    "https://coinerbot.vercel.app",
+    "https://coinerbot.site",
     "https://remocoin.vercel.app"
   ],
   credentials: true
