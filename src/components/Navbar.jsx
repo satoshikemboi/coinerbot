@@ -1,32 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { FaWallet, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
-import { User } from "lucide-react";
+import { FaWallet, FaBars, FaUser, FaTimes, FaChevronDown, FaSignOutAlt } from "react-icons/fa";
 
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false); // Wallet dropdown
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile sidebar
   const [isAccountOpen, setIsAccountOpen] = useState(false); // Mobile sub-menu toggle
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-
-  // --- LOGIC: Redirect to warning page instead of showing popup ---
-  const handleFuturesClick = (e) => {
-    const hasAccepted = sessionStorage.getItem("futures_accepted");
-    
-    if (!hasAccepted) {
-      // 1. Prevent direct navigation to /futures
-      e.preventDefault(); 
-      // 2. Close mobile menu if it's open
-      setIsMobileMenuOpen(false); 
-      // 3. Send them to the dedicated warning component page
-      navigate("/futures"); 
-    }
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+    setIsProfileOpen(false); // Close profile when wallet opens
   };
 
-  // Helper function for active link styles
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+    setIsOpen(false); // Close wallet when profile opens
+  };
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+
+  // --- API Fetch with Error Handling ---
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch('https://remocoin.onrender.com/api/user/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
+          }
+        });
+
+        // If 404 or other error, don't try to parse as JSON
+        if (!response.ok) throw new Error(`Status: ${response.status}`);
+
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error("Profile fetch error:", error);
+        // Error remains null, UI will show "Failed to load"
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    setIsProfileOpen(false);
+    navigate('/login');
+  };
+
+  // Helper styles
   const getLinkStyles = ({ isActive }) =>
     isActive
       ? "bg-green-500 text-white px-3 py-2 rounded font-semibold shadow-sm transition-all"
@@ -109,11 +145,58 @@ function Navbar() {
             </>
           )}
           {/* Profile Icon Container */}
-          <Link to="/profile"
+          <div className="flex items-center gap-2 md:gap-4">
+      <div className="relative flex gap-2 md:gap-4 pr-2">
+        
+
+       {/* Profile Dropdown */}
+       <div className="relative">
+          <button
+            onClick={toggleProfile}
             className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors border border-gray-200"
           >
-            <User className="w-6 h-6 text-gray-600" />
-          </Link>
+            <FaUser className="w-5 h-5 text-gray-600" />
+          </button>
+
+          {isProfileOpen && (
+            <>
+              <div className="fixed inset-0 h-screen w-screen bg-black/5 z-40" onClick={() => setIsProfileOpen(false)} />
+              <div className="absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 p-5">
+                {loading ? (
+                  <div className="flex justify-center p-4"><div className="animate-spin h-5 w-5 border-2 border-green-500 rounded-full border-t-transparent"></div></div>
+                ) : user ? (
+                  <div className="space-y-4 text-left">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 leading-tight">{user.name}</h3>
+                      <p className="text-sm text-slate-500 mt-1 truncate">{user.email}</p>
+                    </div>
+                    <div className="space-y-3 py-2">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-slate-400 font-medium">Phone:</span>
+                        <span className="text-slate-800 font-semibold">{user.phone || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-slate-400 font-medium">Country:</span>
+                        <span className="text-slate-800 font-semibold">{user.country || 'N/A'}</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <Link to="/profile" onClick={() => setIsProfileOpen(false)} className="flex-1 text-center py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50">Profile</Link>
+                      <Link to="/history" onClick={() => setIsProfileOpen(false)} className="flex-1 text-center py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50">History</Link>
+                    </div>
+                    <button onClick={handleSignOut} className="w-full mt-2 flex items-center justify-center gap-2 py-3 border border-red-100 rounded-xl text-red-500 font-bold hover:bg-red-50 transition-colors">
+                      <FaSignOutAlt className="text-sm" /> Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-sm text-red-500 p-4">Unauthorized or Error. Please log in again.</p>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
         </div>
       </div>
 
