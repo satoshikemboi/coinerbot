@@ -33,7 +33,7 @@ function Navbar() {
           return;
         }
 
-        const response = await fetch('https://remocoin.onrender.com/api/user/profile', {
+        const response = await fetch('https://remocoin.onrender.com/api/users/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
