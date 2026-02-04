@@ -1,79 +1,65 @@
-import React, { useState } from 'react';
-import { ChevronDown, Mail, ShieldAlert, Calendar, Globe } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mail, ShieldAlert, Calendar, Globe } from 'lucide-react';
+import ProfileCard from './ProfileCard';
 import PersonalInformation from './PersonalInformation';
+import Security from './Security'
+import Preferences from './Preferences';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('Personal Info');
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const tabs = [
-    'Personal Info', 
-    'Security', 
-    'Preferences', 
-    'Trading History', 
-    'Notifications'
-  ];
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('https://remocoin.onrender.com/api/users/profile', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          setUserData(data.user);
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading Profile...</div>;
+  if (error) return <div className="min-h-screen flex items-center justify-center text-red-500">Error: {error}</div>;
+
+  const tabs = ['Personal Info', 'Security', 'Preferences', 'Trading History', 'Notifications'];
 
   return (
     <div className="min-h-screen bg-gray-50/30 p-4 md:p-10 font-nunito">
       <div className="max-w-7xl mx-auto">
-        
-        {/* Page Header - Centered on mobile, left-aligned on desktop */}
         <div className="mb-8 text-center md:text-left">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Profile </h1>
-          <p className="text-sm md:text-base text-gray-500">Manage your account settings and preferences</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Profile</h1>
+          <p className="text-sm md:text-base text-gray-500">Manage your settings</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
-          
-          {/* Left Sidebar Card */}
-          <aside className="w-full lg:w-80 shrink-0">
-            {/* Reduced p-8 to p-6 for mobile mobile to save space */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8 shadow-sm text-center">
-              <div className="w-20 h-20 md:w-24 md:h-24 bg-[#2dd4bf] rounded-full mx-auto flex items-center justify-center mb-4 md:mb-6">
-                <span className="text-white text-xl md:text-2xl font-bold">VL</span>
-              </div>
+          {/* Pass userData to ProfileCard */}
+          <ProfileCard userData={userData} />
 
-              <h2 className="text-xl font-bold text-gray-900 mb-1">Kevin Hegseth</h2>
-              <div className="flex items-center justify-center gap-2 text-gray-500 text-sm mb-2">
-                <Mail className="w-4 h-4" />
-                <span className="truncate">hegseth@gmail.com</span>
-              </div>
-              <div className="flex items-center justify-center gap-1.5 text-amber-500 text-xs font-semibold uppercase tracking-wider mb-6 md:mb-8">
-                <ShieldAlert className="w-4 h-4" />
-                <span>Not verified</span>
-              </div>
-
-              <div className="space-y-4 border-t border-gray-50 pt-6 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Member since</span>
-                  <span className="text-gray-900 font-semibold">1/8/2026</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Country</span>
-                  <span className="text-gray-900 font-semibold">Kenya</span>
-                </div>
-              </div>
-
-              <button className="w-full mt-8 py-3 px-4 border border-gray-200 rounded-xl text-sm font-bold text-gray-800 hover:bg-gray-50 transition-all">
-                Complete Verification
-              </button>
-            </div>
-          </aside>
-
-          {/* Right Main Content */}
-          <main className="flex-1 min-w-0"> {/* min-w-0 prevents flex items from overflowing */}
-            
-            {/* Navigation Tabs - Added horizontal scroll for mobile */}
+          <main className="flex-1 min-w-0">
             <div className="mb-6 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
               <div className="bg-gray-100 p-1 rounded-lg flex md:inline-flex min-w-max">
                 {tabs.map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`px-4 md:px-6 py-2.5 rounded-lg text-sm md:text-sm font-bold transition-all whitespace-nowrap ${
-                      activeTab === tab
-                        ? 'bg-emerald-400 text-gray-900 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-700'
+                    className={`px-4 md:px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                      activeTab === tab ? 'bg-emerald-400 text-gray-900 shadow-sm' : 'text-gray-500'
                     }`}
                   >
                     {tab}
@@ -82,7 +68,10 @@ const Profile = () => {
               </div>
             </div>
 
-            <PersonalInformation />
+            {/* Only show content if tab is active and pass userData */}
+            {activeTab === 'Personal Info' && <PersonalInformation userData={userData} />}
+            {activeTab === 'Security' && <Security />}
+            {activeTab == 'Preferences' && <Preferences />}
           </main>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { protect } from "../middleware/authMiddleware.js";
 
 import { 
   getUsers, 
-  getUserById, // Make sure this is included
+  getUserById,
   updateUser, 
   deleteUser, 
   signupUser, 
@@ -15,7 +15,6 @@ import {
 
 const router = express.Router();
 
-// Update your routes to use the correct names
 router.post("/signup", signupUser);
 router.post("/login", loginUser);
 router.get("/profile", protect, getMyProfile);

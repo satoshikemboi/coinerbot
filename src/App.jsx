@@ -25,6 +25,9 @@ import Support from './components/Support';
 import Help from './components/Help';
 import Profile from './components/Profile';
 import PersonalInformation from './components/PersonalInformation';
+import ProfileCard from './components/ProfileCard';
+import Security from './components/Security';
+import Preferences from './components/Preferences';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,12 +39,6 @@ const queryClient = new QueryClient({
   },
 });
 
-/**
- * MainLayout handles the shared UI for authenticated pages.
- * - Shows Navbar (Top)
- * - Shows BottomNav (Bottom, Mobile only via internal tailwind)
- * - pb-20 on mobile ensures content isn't hidden by the fixed BottomNav
- */
 const MainLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
@@ -89,6 +86,9 @@ function App() {
           <Route path="/help" element={<Help/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/personal-information" element={<PersonalInformation />} />
+          <Route path="/profilecard" element={<ProfileCard />} />
+          <Route path="/security" element={<Security />} />
+          <Route path="/preferences" element={<Preferences />} />
         </Route>
 
         {/* Fallback for 404 - Optional */}

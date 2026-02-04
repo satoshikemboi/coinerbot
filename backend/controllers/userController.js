@@ -137,7 +137,6 @@ export const deleteUser = async (req, res) => {
 // GET PROFILE: Fetch the currently logged-in user's details
 export const getMyProfile = async (req, res) => {
   try {
-    // req.user.id is set by your auth middleware after verifying the JWT
     const user = await User.findById(req.user.id).select("-password");
     
     if (!user) {
@@ -151,7 +150,8 @@ export const getMyProfile = async (req, res) => {
         email: user.email,
         country: user.country,
         phoneNumber: user.phoneNumber,
-        signupDate: user.createdAt // Mongoose adds this automatically if timestamps: true
+        signupDate: user.createdAt,
+        isVerified: user.isVerified || false
       }
     });
   } catch (error) {

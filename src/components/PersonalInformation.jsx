@@ -1,53 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const PersonalInformation = () => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        setLoading(true);
-        
-        // Retrieve the token saved during login/signup
-        const token = localStorage.getItem('token'); 
-
-        const response = await fetch('https://remocoin.onrender.com/api/users/profile', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            // This tells the backend who you are
-            'Authorization': `Bearer ${token}` 
-          }
-        });
-        
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Failed to fetch user data');
-        }
-
-        // Access the 'user' object from your backend response
-        setUserData(data.user);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  if (loading) return <div className="p-8 text-gray-500 text-center">Loading profile...</div>;
-  if (error) return <div className="p-8 text-red-500 text-center">Error: {error}</div>;
-  if (!userData) return <div className="p-8 text-center">No user data found.</div>;
+// Receive userData as a prop from Profile.jsx
+const PersonalInformation = ({ userData }) => {
+  
+  // If the parent is still loading, userData might be null initially
+  if (!userData) {
+    return <div className="p-8 text-gray-500 text-center">No user data available.</div>;
+  }
 
   return (
-    <div className="bg-gray-100 text-gray-800 p-8 max-w-2xl font-nunito rounded-lg shadow-sm">
+    <div className="bg-white text-gray-800 p-6 md:p-8 max-w-2xl font-nunito rounded-2xl border border-gray-100 shadow-sm">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-xl font-semibold">Personal information</h2>
+        <h2 className="text-xl font-bold text-gray-900">Personal information</h2>
       </div>
 
       <div className="space-y-6">
@@ -55,7 +19,10 @@ const PersonalInformation = () => {
         <InfoRow label="Legal Name" value={userData.name} />
         <InfoRow label="Email Address" value={userData.email} />
         <InfoRow label="Phone Number" value={userData.phoneNumber} />
-        <InfoRow label="Date of Signing Up" value={new Date(userData.signupDate).toLocaleDateString()} />
+        <InfoRow 
+          label="Date of Signing Up" 
+          value={userData.signupDate ? new Date(userData.signupDate).toLocaleDateString() : 'N/A'} 
+        />
       </div>
     </div>
   );
@@ -63,9 +30,9 @@ const PersonalInformation = () => {
 
 // Helper component for clean rows
 const InfoRow = ({ label, value }) => (
-  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
-    <span className="text-gray-400 text-sm">{label}</span>
-    <span className="text-sm font-medium">{value || 'Not provided'}</span>
+  <div className="flex justify-between items-center border-b border-gray-50 pb-4 last:border-0 last:pb-0">
+    <span className="text-gray-400 text-sm font-medium">{label}</span>
+    <span className="text-sm font-semibold text-gray-900">{value || 'Not provided'}</span>
   </div>
 );
 
