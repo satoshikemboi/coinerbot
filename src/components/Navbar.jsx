@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { FaWallet, FaBars, FaUser, FaTimes, FaChevronDown, FaSignOutAlt } from "react-icons/fa";
 
+const DetailRow = ({ label, value }) => (
+  <div className="flex justify-between items-center text-sm">
+    <span className="text-slate-400 font-medium">{label}:</span>
+    <span className="text-slate-800 font-semibold">{value || 'N/A'}</span>
+  </div>
+);
+
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false); // Wallet dropdown
@@ -44,7 +51,7 @@ function Navbar() {
         if (!response.ok) throw new Error(`Status: ${response.status}`);
 
         const data = await response.json();
-        setUser(data);
+        setUser(data.user || data.data || data);
       } catch (error) {
         console.error("Profile fetch error:", error);
         // Error remains null, UI will show "Failed to load"
@@ -159,41 +166,62 @@ function Navbar() {
           </button>
 
           {isProfileOpen && (
-            <>
-              <div className="fixed inset-0 h-screen w-screen bg-black/5 z-40" onClick={() => setIsProfileOpen(false)} />
-              <div className="absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 p-5">
-                {loading ? (
-                  <div className="flex justify-center p-4"><div className="animate-spin h-5 w-5 border-2 border-green-500 rounded-full border-t-transparent"></div></div>
-                ) : user ? (
-                  <div className="space-y-4 text-left">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-800 leading-tight">{user.name}</h3>
-                      <p className="text-sm text-slate-500 mt-1 truncate">{user.email}</p>
-                    </div>
-                    <div className="space-y-3 py-2">
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-slate-400 font-medium">Phone:</span>
-                        <span className="text-slate-800 font-semibold">{user.phone || 'N/A'}</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-slate-400 font-medium">Country:</span>
-                        <span className="text-slate-800 font-semibold">{user.country || 'N/A'}</span>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <Link to="/profile" onClick={() => setIsProfileOpen(false)} className="flex-1 text-center py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50">Profile</Link>
-                      <Link to="/history" onClick={() => setIsProfileOpen(false)} className="flex-1 text-center py-2.5 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50">History</Link>
-                    </div>
-                    <button onClick={handleSignOut} className="w-full mt-2 flex items-center justify-center gap-2 py-3 border border-red-100 rounded-xl text-red-500 font-bold hover:bg-red-50 transition-colors">
-                      <FaSignOutAlt className="text-sm" /> Sign Out
-                    </button>
-                  </div>
-                ) : (
-                  <p className="text-sm text-red-500 p-4">Unauthorized or Error. Please log in again.</p>
-                )}
-              </div>
-            </>
-          )}
+  <>
+    {/* Backdrop - Good job here */}
+    <div 
+      className="fixed inset-0 h-screen w-screen bg-black/5 z-40" 
+      onClick={() => setIsProfileOpen(false)} 
+    />
+    
+    <div className="absolute right-0 mt-3 w-72 bg-gray-100 rounded-2xl shadow-2xl border border-gray-100 z-50 p-5 animate-in fade-in zoom-in duration-200">
+      {loading ? (
+        <div className="flex flex-col items-center justify-center p-8 gap-3">
+          <div className="animate-spin h-6 w-6 border-2 border-green-500 rounded-full border-t-transparent" />
+          <p className="text-xs text-slate-400 font-medium">Fetching profile...</p>
+        </div>
+      ) : user ? (
+        <div className="space-y-4 text-left">
+          {/* Header Section */}
+          <div className="border-b border-gray-50 pb-3">
+            <h3 className="text-lg font-bold text-gray-800 truncate" title={user.name}>
+              {user.name}
+            </h3>
+            <p className="text-xs text-slate-500 truncate">{user.email}</p>
+          </div>
+
+          {/* Details Section */}
+          <div className="space-y-2">
+            <DetailRow label="Phone" value={user.phoneNumber} />
+            <DetailRow label="Country" value={user.country} />
+          </div>
+
+          {/* Navigation Actions */}
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <Link to="/profile" onClick={() => setIsProfileOpen(false)} className="py-2 border border-gray-100 rounded-xl text-center text-sm font-semibold text-gray-100 bg-emerald-500 transition-colors">
+              Profile
+            </Link>
+            <Link to="/history" onClick={() => setIsProfileOpen(false)} className="py-2 border border-gray-100 rounded-xl text-center text-sm font-semibold text-gray-100 bg-emerald-500 transition-colors">
+              History
+            </Link>
+          </div>
+
+          {/* Sign Out */}
+          <button 
+            onClick={handleSignOut} 
+            className="w-full flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-red-50 rounded-xl text-gray-800 text-sm font-bold transition-all border border-transparent hover:border-red-100"
+          >
+            <FaSignOutAlt /> Sign Out
+          </button>
+        </div>
+      ) : (
+        <div className="text-center p-4">
+          <p className="text-sm text-red-500 font-medium mb-2">Failed to load profile</p>
+          <button onClick={() => window.location.reload()} className="text-xs text-blue-500 underline">Try again</button>
+        </div>
+      )}
+    </div>
+  </>
+)}
         </div>
       </div>
     </div>
@@ -241,6 +269,7 @@ function Navbar() {
           </div>
         </div>
       )}
+      
     </nav>
   );
 }

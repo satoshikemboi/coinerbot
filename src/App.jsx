@@ -28,6 +28,7 @@ import PersonalInformation from './components/PersonalInformation';
 import ProfileCard from './components/ProfileCard';
 import Security from './components/Security';
 import Preferences from './components/Preferences';
+import History from './components/History';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -89,6 +90,7 @@ function App() {
           <Route path="/profilecard" element={<ProfileCard />} />
           <Route path="/security" element={<Security />} />
           <Route path="/preferences" element={<Preferences />} />
+          <Route path="/history" element={<History />} />
         </Route>
 
         {/* Fallback for 404 - Optional */}

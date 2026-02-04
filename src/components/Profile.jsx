@@ -4,6 +4,7 @@ import ProfileCard from './ProfileCard';
 import PersonalInformation from './PersonalInformation';
 import Security from './Security'
 import Preferences from './Preferences';
+import History from './History';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('Personal Info');
@@ -72,6 +73,7 @@ const Profile = () => {
             {activeTab === 'Personal Info' && <PersonalInformation userData={userData} />}
             {activeTab === 'Security' && <Security />}
             {activeTab == 'Preferences' && <Preferences />}
+            {activeTab === 'Trading History' && <History />}
           </main>
         </div>
       </div>
