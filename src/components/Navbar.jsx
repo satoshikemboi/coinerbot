@@ -129,7 +129,7 @@ function Navbar() {
         <div className="relative flex gap-2 md:gap-4 pr-2">
         <button 
   onClick={toggleDropdown} 
-  className="bg-green-100 text-green-600 font-semibold px-2 md:px-3 py-1 rounded inline-flex items-center gap-1.5 hover:bg-green-200 transition-colors relative z-50 text-sm md:text-base border border-green-200/50"
+  className="bg-green-100 text-green-600 font-semibold px-2 md:px-3 py-0.5 rounded inline-flex items-center gap-1.5 hover:bg-green-200 transition-colors relative z-50 text-sm md:text-base border border-green-200/50"
 >
   <FaWallet className="text-xs md:text-sm" /> 
   <span>$0.00</span> 
@@ -160,9 +160,7 @@ function Navbar() {
           )}
           {/* Profile Icon Container */}
           <div className="flex items-center gap-2 md:gap-4">
-      <div className="relative flex gap-2 md:gap-4 pr-2">
-        
-
+      <div className="relative flex gap-2 md:gap-4">
        {/* Profile Dropdown */}
        <div className="relative">
           <button
