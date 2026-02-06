@@ -1,26 +1,24 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-/** * DATA STORE 
- * Add your specific bots for each category here.
- */
+// --- DATA STORE ---
 const BOTS_DATA = {
   dca: {
     title: "Dollar-Cost Averaging",
     description: "Regular purchases of assets regardless of price to minimize volatility.",
     items: [
       { id: 1, title: "Bitcoin Accumulation", schedule: "Weekly.DCA", description: "Dollar-cost averaging into Bitcoin on a weekly basis.", risk: "Low", performance: "+2.4%", status: "Inactive", primaryAction: "Run Bot" },
-      { id: 2, title: "ETH DCA Pro", schedule: "Daily.DCA", description: "Dynamic DCA based on RSI and volume indicators.", risk: "Medium", performance: "+3.7%", status: "Inactive", primaryAction: "Run bot" },
-      { id: 3, title: "Multi-Coin DCA", schedule: "Monthly.DCA", description: "DCA into top 5 cryptocurruncies by market cap", risk: "Medium", performance: "+4.2%", status: "Inactive", primaryAction: "Run Bot" },
-      { id: 4, title: "Cycle-Based Accumulation", schedule: "Bi-Weekly.DCA", description: "DCA more during market dips, less during highs.", risk: "Low", performance: "+1.8%", status: "Inactive", primaryAction: "Run bot" }
+      { id: 2, title: "ETH DCA Pro", schedule: "Daily.DCA", description: "Dynamic DCA based on RSI and volume indicators.", risk: "Medium", performance: "+3.7%", status: "Inactive", primaryAction: "Run Bot" },
+      { id: 3, title: "Multi-Coin DCA", schedule: "Monthly.DCA", description: "DCA into top 5 cryptocurrencies by market cap.", risk: "Medium", performance: "+4.2%", status: "Inactive", primaryAction: "Run Bot" },
+      { id: 4, title: "Cycle-Based Accumulation", schedule: "Bi-Weekly.DCA", description: "DCA more during market dips, less during highs.", risk: "Low", performance: "+1.8%", status: "Inactive", primaryAction: "Run Bot" }
     ]
   },
   grid: {
     title: "Grid Trading",
     description: "Place buy and sell orders at predetermined levels.",
     items: [
-      { id: 5, title: "BTC Grid Basic", schedule: "Continuous.Grid", description: "Profit from BTC ranging between $90000-$100000.", risk: "Medium", performance: "+5.1%", status: "Inactive", primaryAction: "Run bot" },
-      { id: 6, title: "ETH Grid Advanced", schedule: "Continuous.Grid", description: "Dynamic grid with auto-adjusting ranges.", risk: "High", performance: "+7.3%", status: "Inactive", primaryAction: "Run bot" },
+      { id: 5, title: "BTC Grid Basic", schedule: "Continuous.Grid", description: "Profit from BTC ranging between $90,000-$100,000.", risk: "Medium", performance: "+5.1%", status: "Inactive", primaryAction: "Run Bot" },
+      { id: 6, title: "ETH Grid Advanced", schedule: "Continuous.Grid", description: "Dynamic grid with auto-adjusting ranges.", risk: "High", performance: "+7.3%", status: "Inactive", primaryAction: "Run Bot" },
       { id: 7, title: "BNB Range Grid", schedule: "Continuous.Grid", description: "Grid trading optimized for BNB volatility ranges", risk: "Medium", performance: "3.6%", status: "Inactive", primaryAction: "Run bot"},
       { id: 8, title: "Solana Full Range", schedule: "Continuous.Grid", description: "Grid trading covering the full SOL price range", risk: "High", performance: "3.6%", status: "Inactive", primaryAction: "Run bot"},
     ]
@@ -49,17 +47,61 @@ const BOTS_DATA = {
     title: "Signal-Based",
     description: "Bots that execute trades based on external technical or social signals.",
     items: [
-      { id: 1, title: "RSI-Based Signals", schedule: "4h.Signal", description: "Trades based on RSI crossing overbought/oversold levels", risk: "Medium", performance: "Medium", status: "Inactive", primaryAction: "Setup Signal" },
-      { id: 2, title: "Moving Average Bot", schedule: "1h.Signal", description: "Trades based on MA crossover signals", risk: "High", performance: "+2.8%", status: "Inactive", primaryAction: "View Bot" },
-      { id: 3, title: "Pattern Recognition", schedule: "1d.Signal", description: "Identifies and trades chart patterns", risk: "Extreme", performance: "+4.3%", status: "Inactive", primaryAction: "View Bot" },
-      { id: 4, title: "News Sentiment Bot", schedule: "6h.Signal", description: "Trades based on crypto news sentiment analysis", risk: "High", performance: "+10.4%", status: "Inctive", primaryAction: "View Bot" },
+      { id: 17, title: "RSI-Based Signals", schedule: "4h.Signal", description: "Trades based on RSI crossing overbought/oversold levels", risk: "Medium", performance: "Medium", status: "Inactive", primaryAction: "View Bot" },
+      { id: 18, title: "Moving Average Bot", schedule: "1h.Signal", description: "Trades based on MA crossover signals", risk: "High", performance: "+2.8%", status: "Inactive", primaryAction: "View Bot" },
+      { id: 19, title: "Pattern Recognition", schedule: "1d.Signal", description: "Identifies and trades chart patterns", risk: "Extreme", performance: "+4.3%", status: "Inactive", primaryAction: "View Bot" },
+      { id: 20, title: "News Sentiment Bot", schedule: "6h.Signal", description: "Trades based on crypto news sentiment analysis", risk: "High", performance: "+10.4%", status: "Inactive", primaryAction: "View Bot" },
     ]
   }
 };
 
+// --- HERO SECTION (Internal) ---
+const TradingHero = () => (
+  <div className="relative w-full overflow-hidden rounded-2xl mb-8 bg-slate-900 text-white shadow-xl">
+    <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 bg-linear-to-r from-gray-900 to-transparent" />
+      <img 
+        src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=2000" 
+        alt="Trading Graph" 
+        className="w-full h-full object-cover"
+      />
+    </div>
+
+    <div className="relative z-10 p-6 md:px-10 md:py-5">
+      <div className="mb-3">
+        <h2 className="text-lg md:text-2xl font-bold mb-2">Automated Trading</h2>
+        <p className="text-slate-300 text-sm md:text-md max-w-md">
+        Create and manage algorithmic trading strategies
+        </p>
+      </div>
+
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="flex gap-8 md:gap-16">
+          <div>
+            <div className="text-xl md:text-2xl text-gray-100 font-bold">20</div>
+            <div className="text-xs md:text-sm text-gray-200 font-medium mt-1 tracking-wider">Total Bots</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-2xl text-gray-100 font-bold">1</div>
+            <div className="text-xs md:text-sm text-gray-200 font-medium mt-1 tracking-wider">Active</div>
+          </div>
+          <div>
+            <div className="text-xl md:text-2xl text=gray-100 font-bold text-emerald-400">+4.8%</div>
+            <div className="text-xs md:text-sm text-gray-200 font-medium mt-1 tracking-wider">Weekly Return</div>
+          </div>
+        </div>
+
+        <button className="w-full sm:w-auto bg-white text-slate-900 px-6 py-1.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-slate-100 transition-all active:scale-95 shadow-lg">
+          Create New Bot <span className="text-lg">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
 // --- StatItem (Internal) ---
 const StatItem = ({ label, value, subValue, isPositive }) => (
-  <div>
+  <div className="p-1">
     <div className="flex justify-between text-sm text-slate-400 pb-1">
       <span>{label}</span>
       <span className={isPositive ? "text-green-500 font-bold" : "text-slate-800 font-bold"}>{value}</span>
@@ -69,38 +111,30 @@ const StatItem = ({ label, value, subValue, isPositive }) => (
 );
 
 // --- BotCard (Internal) ---
-const BotCard = ({ title, schedule, description, risk, performance, status, primaryAction }) => {
-  const statusColors = {
-    Active: 'bg-green-100 text-green-600',
-    Inactive: 'bg-gray-100 text-gray-500',
-    Configured: 'bg-blue-100 text-blue-600',
-  };
-
-  return (
-    <div className="border-2 border-emerald-400 rounded-xl p-5 bg-white shadow-sm flex flex-col justify-between hover:shadow-lg transition-all">
-      <div>
-        <div className="flex justify-between items-start mb-1">
-          <h3 className="font-bold text-lg text-slate-800">{title}</h3>
-          <span className={`px-3 py-1 rounded text-xs font-bold ${statusColors[status] || statusColors.Inactive}`}>
-            {status}
-          </span>
-        </div>
-        <p className="text-sm font-semibold text-gray-400 mb-3">{schedule}</p>
-        <p className="text-sm font-semibold text-gray-600 mb-6 leading-relaxed">{description}</p>
+const BotCard = ({ title, schedule, description, risk, performance, status, primaryAction }) => (
+  <div className="border border-slate-200 rounded-xl p-5 bg-white shadow-sm flex flex-col justify-between hover:border-emerald-400 hover:shadow-md transition-all group">
+    <div>
+      <div className="flex justify-between items-start mb-1">
+        <h3 className="font-bold text-lg text-slate-800 group-hover:text-emerald-600 transition-colors">{title}</h3>
+        <span className={`px-3 py-1 rounded text-xs font-bold ${status === 'Active' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+          {status}
+        </span>
       </div>
-      <div>
-        <div className="flex justify-between text-xs mb-4">
-          <span className="text-slate-400 font-semibold">Risk: <span className={risk === 'Low' ? 'text-green-500' : 'text-orange-500'}>{risk}</span></span>
-          <span className="text-slate-400 font-semibold">Performance: <span className="text-green-500 font-bold">{performance}</span></span>
-        </div>
-        <div className="flex gap-3">
-          <button className="flex-1 py-2 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">Configure</button>
-          <button className="flex-1 py-2 bg-emerald-400 text-white rounded-lg text-sm font-semibold hover:bg-emerald-500 transition shadow-sm">{primaryAction}</button>
-        </div>
+      <p className="text-xs font-bold text-emerald-500 mb-3 uppercase tracking-tighter">{schedule}</p>
+      <p className="text-sm font-semibold text-gray-800 mb-3 leading-relaxed">{description}</p>
+    </div>
+    <div>
+      <div className="flex justify-between text-xs mb-4 border-t border-slate-50 pt-4">
+        <span className="text-slate-400 font-semibold">Risk: <span className={risk === 'Low' ? 'text-green-500' : 'text-orange-500'}>{risk}</span></span>
+        <span className="text-slate-400 font-semibold">Performance: <span className="text-green-500 font-bold">{performance}</span></span>
+      </div>
+      <div className="flex gap-3">
+        <button className="flex-1 py-2 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition">Configure</button>
+        <button className="flex-1 py-2 bg-emerald-500 text-white rounded-lg text-sm font-bold hover:bg-emerald-600 transition shadow-sm">{primaryAction}</button>
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 // --- Sidebar (Internal) ---
 const Sidebar = () => {
@@ -114,16 +148,20 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-full md:w-64 font-nunito space-y-8">
-      <section className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-        <h2 className="font-semibold text-lg text-slate-800 mb-4">Bot Categories</h2>
-        <nav className="space-y-2">
+    <aside className="w-full lg:w-64 space-y-6">
+      <section className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+        <h2 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+          Categories
+        </h2>
+        <nav className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`block w-full px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                location.pathname === item.path ? 'bg-emerald-400 text-white shadow-md' : 'bg-gray-50 text-gray-600 hover:bg-slate-100'
+              className={`whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                location.pathname === item.path 
+                  ? 'bg-emerald-500 text-white shadow-emerald-200 shadow-lg' 
+                  : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
               }`}
             >
               {item.name}
@@ -131,8 +169,9 @@ const Sidebar = () => {
           ))}
         </nav>
       </section>
-      <section className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-        <h2 className="font-semibold text-slate-800 mb-4 text-lg">Bot Performance</h2>
+
+      <section className="hidden lg:block bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+        <h2 className="font-bold text-slate-800 mb-4">Quick Stats</h2>
         <div className="space-y-4">
           <StatItem label="Best Performer" value="+10.2%" subValue="News Sentiment Bot" isPositive />
           <StatItem label="Most Active" value="143 trades" subValue="BTC Micro Scalper" />
@@ -150,22 +189,36 @@ const Bots = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-nunito">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-        <Sidebar />
-        <main className="flex-1">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
-            <h1 className="text-2xl font-bold text-slate-900">{activeData.title} Bots</h1>
-            <button className="bg-emerald-400 text-white px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-emerald-500 shadow-md">
-              Create {categoryKey.toUpperCase()} Bot
-            </button>
-          </div>
-          <p className="text-slate-500 mb-8">{activeData.description}</p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {activeData.items.map((bot) => (
-              <BotCard key={bot.id} {...bot} />
-            ))}
-          </div>
-        </main>
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Header Title */}
+        <header className="mb-6">
+          <h1 className="text-3xl font-extrabold text-slate-900">Trading Bots</h1>
+          <p className="text-slate-500 font-medium">Create, configure, and manage your automated trading strategies</p>
+        </header>
+
+        {/* Hero Section */}
+        <TradingHero />
+
+        {/* Content Layout */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          <Sidebar />
+          
+          <main className="flex-1">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-xl font-bold text-slate-800">{activeData.title}</h2>
+                <p className="text-slate-500 text-sm hidden sm:block">{activeData.description}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {activeData.items.map((bot) => (
+                <BotCard key={bot.id} {...bot} />
+              ))}
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );

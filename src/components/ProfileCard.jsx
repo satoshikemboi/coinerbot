@@ -52,7 +52,7 @@ const ProfileCard = ({ userData }) => {
         </div>
 
         {!userData.isVerified && (
-          <button className="w-full mt-8 py-3 px-4 border border-gray-200 rounded-xl text-sm font-bold text-gray-800 hover:bg-gray-50 transition-all">
+          <button className="w-full mt-8 py-3 px-4 border border-gray-200 rounded-xl text-sm font-bold text-gray-800 bg-emerald-500 hover:bg-gray-50 transition-all">
             Complete Verification
           </button>
         )}
